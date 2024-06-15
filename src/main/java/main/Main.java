@@ -4,6 +4,7 @@ package main;
 import implementation.Supermarket;
 import implementation.SupermarketArray;
 
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 // Define a classe principal chamada Main
@@ -22,7 +23,7 @@ public class Main {
         Supermarket supermarket = new SupermarketArray(SIZE);
 
         // Declara uma variável para armazenar a opção escolhida pelo usuário
-        int opcao;
+        int opcao = -1;
 
         // Inicia um loop do-while que continuará até que a opção de sair (4) seja selecionada
         do {
@@ -34,36 +35,47 @@ public class Main {
             System.out.println("4 - Sair");
             System.out.println("Escolha uma opção: ");
 
-            // Lê a opção escolhida pelo usuário
-            opcao = scanner.nextInt();
+            try {
+                // Lê a opção escolhida pelo usuário
+                opcao = scanner.nextInt();
 
-            // Executa uma ação com base na opção escolhida pelo usuário
-            switch (opcao) {
-                case 1:
-                    // Caso a opção seja 1, solicita ao usuário que insira um item
-                    System.out.println("Digite o item a ser inserido: ");
-                    String item = scanner.next();
-                    // Adiciona o item ao supermercado
-                    supermarket.add(item);
-                    break;
-                case 2:
-                    // Caso a opção seja 2, lista todos os itens no supermercado
-                    supermarket.print();
-                    break;
-                case 3:
-                    // Caso a opção seja 3, solicita ao usuário que insira a posição do item a ser removido
-                    System.out.println("Digite a posição a ser removida: ");
-                    int index = scanner.nextInt();
-                    // Remove o item na posição especificada
-                    supermarket.delete(index);
-                    break;
-                case 4:
-                    // Caso a opção seja 4, informa ao usuário que o programa está encerrando
-                    System.out.println("Saindo do programa");
-                    break;
-                default:
-                    // Se a opção for inválida, exibe uma mensagem de erro
-                    System.out.println("Opção inválida, tente novamente!");
+                // Executa uma ação com base na opção escolhida pelo usuário
+                switch (opcao) {
+                    case 1:
+                        // Caso a opção seja 1, solicita ao usuário que insira um item
+                        System.out.println("Digite o item a ser inserido: ");
+                        String item = scanner.next();
+                        // Adiciona o item ao supermercado
+                        supermarket.add(item);
+                        break;
+                    case 2:
+                        // Caso a opção seja 2, lista todos os itens no supermercado
+                        supermarket.print();
+                        break;
+                    case 3:
+                        // Caso a opção seja 3, solicita ao usuário que insira a posição do item a ser removido
+                        System.out.println("Digite a posição a ser removida: ");
+                        int index = scanner.nextInt();
+                        // Remove o item na posição especificada
+                        supermarket.delete(index);
+                        break;
+                    case 4:
+                        // Caso a opção seja 4, informa ao usuário que o programa está encerrando
+                        System.out.println("Saindo do programa");
+                        break;
+                    default:
+                        // Se a opção for inválida, exibe uma mensagem de erro
+                        System.out.println("Opção inválida, tente novamente!");
+                }
+
+
+            } catch (InputMismatchException e) {
+                // Aqui estamos usando a variável 'e' para acessar informações da exceção
+                System.out.println("Entrada inválida, por favor insira um número.");
+                //imprimir a mensagem da exceção (não é necessário, mas pode ser útil para depuração)
+                System.out.println("Detalhes do erro: " + e.getMessage());
+                // Limpar o buffer do Scanner para descartar a entrada inválida
+                scanner.next();
             }
             // O loop continua até que a opção 4 seja selecionada
         } while (opcao != 4);
